@@ -1,4 +1,5 @@
-import { CreditCard, Mail, Shield } from 'lucide-react'
+'use client'
+// import { CreditCard, Mail, Shield } from 'lucide-react'
 import React, { useState } from 'react'
 
 const page = () => {

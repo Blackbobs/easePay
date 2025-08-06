@@ -1,37 +1,37 @@
 'use client'
 // import { CreditCard, Mail, Shield } from 'lucide-react'
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 
 const page = () => {
-    const [formData, setFormData] = useState({
-        fullName: "",
-        matricNumber: "",
-        email: "",
-        hostelDues: false,
-        departmentDues: false,
-      })
+    // const [formData, setFormData] = useState({
+    //     fullName: "",
+    //     matricNumber: "",
+    //     email: "",
+    //     hostelDues: false,
+    //     departmentDues: false,
+    //   })
     
-      const [step, setStep] = useState(1)
+    //   const [step, setStep] = useState(1)
     
-      const hostelAmount = 25000
-      const departmentAmount = 5000
+    //   const hostelAmount = 25000
+    //   const departmentAmount = 5000
     
-      const getTotalAmount = () => {
-        let total = 0
-        if (formData.hostelDues) total += hostelAmount
-        if (formData.departmentDues) total += departmentAmount
-        return total
-      }
+    //   const getTotalAmount = () => {
+    //     let total = 0
+    //     if (formData.hostelDues) total += hostelAmount
+    //     if (formData.departmentDues) total += departmentAmount
+    //     return total
+    //   }
     
-      const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (step === 1) {
-          setStep(2)
-        } else {
-          // Process payment
-          console.log("Processing payment...", formData)
-        }
-      }
+    //   const handleSubmit = (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     if (step === 1) {
+    //       setStep(2)
+    //     } else {
+    //       // Process payment
+    //       console.log("Processing payment...", formData)
+    //     }
+    //   }
   return (
   //   <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   //   {/* Progress Indicator */}

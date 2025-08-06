@@ -12,7 +12,7 @@ const Cta = () => {
           <p className="text-lg text-gray-600 mb-8">
             Pay your hostel and departmental dues online in just a few clicks
           </p>
-          <Link href="/#!">
+          <Link href="/payment">
             <button className="bg-primary rounded-full text-white px-8 py-3 text-lg">
               Pay Your Dues Now
             </button>

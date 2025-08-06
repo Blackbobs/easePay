@@ -23,13 +23,13 @@ const Hero = () => {
       </div>
 
       <div className="flex flex-row md:flex-row gap-4 justify-center">
-        <Link href="#!">
-          <button className="bg-primary rounded-full text-white font-medium px-8 py-3 text-lg border-2 border-primary">
+        <Link href={"/payment"}>
+          <button className="bg-primary rounded-full text-white font-medium px-6 py-2 text-sm border-2 border-primary">
             Start Payment
           </button>
         </Link>
         <Link href="/#!">
-          <button className="px-5 py-3 text-lg bg-transparent font-medium border-2 border-primary rounded-full hover:bg-primary hover:text-white">
+          <button className="px-6 py-2 text-sm bg-transparent font-medium border-2 border-primary rounded-full hover:bg-primary hover:text-white">
             Check Your Dues
           </button>
         </Link>

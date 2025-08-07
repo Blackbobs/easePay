@@ -1,4 +1,5 @@
 import { CreditCard } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -11,7 +12,7 @@ const Footer = () => {
               <div className="bg-primary p-2 rounded-full flex items-center justify-center">
                 <CreditCard size={20} className="text-white" />
               </div>
-              <span className="text-xl font-bold">easePay</span>
+              <Link href={"/"} className="text-xl font-bold">easePay</Link>
             </div>
             <p className="text-gray-400">
               Making school payments simple and secure for students everywhere.

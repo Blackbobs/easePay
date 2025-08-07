@@ -28,9 +28,9 @@ const Hero = () => {
             Start Payment
           </button>
         </Link>
-        <Link href="/#!">
+        <Link href="/check-receipt">
           <button className="px-6 py-2 text-sm bg-transparent font-medium border-2 border-primary rounded-full hover:bg-primary hover:text-white">
-            Check Your Dues
+            Check Your Receipts
           </button>
         </Link>
       </div>

@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Mail, Shield, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 

@@ -11,12 +11,8 @@ import {
   CreditCard,
   Users,
   TrendingUp,
-  Download,
-  Eye,
-  LogOut,
   DollarSign,
   Calendar,
-  Filter,
 } from "lucide-react";
 
 // Mock data

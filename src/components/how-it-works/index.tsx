@@ -1,4 +1,4 @@
-import { CreditCard, Download, Shield, Users } from "lucide-react";
+import { CreditCard, Download, Users } from "lucide-react";
 import React from "react";
 
 const HowItWorks = () => {

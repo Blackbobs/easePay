@@ -3,10 +3,27 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, CreditCard, Search, Download, Mail, CheckCircle, AlertCircle, BookUser, PhoneCall } from "lucide-react";
+import { CreditCard, Search, Download, Mail, CheckCircle, AlertCircle, BookUser, PhoneCall } from "lucide-react";
+
+interface Payment {
+  id: string;
+  type: string;
+  amount: number;
+  status: string;
+  date: string;
+  time: string;
+  receiptUrl: string;
+};
+
+interface StudentPaymentRecord {
+  name: string;
+  email: string;
+  payments: Payment[];
+};
+
 
 // Mock data for demonstration
-const mockPaymentHistory = {
+const mockPaymentHistory: Record<string, StudentPaymentRecord> = {
   "20/1234": {
     email: "adebayo.johnson@student.edu",
     name: "Adebayo Johnson",
@@ -65,7 +82,7 @@ export default function Page() {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<FormData>();
-  const [searchResult, setSearchResult] = useState<any>(null);
+  const [searchResult, setSearchResult] = useState<StudentPaymentRecord | null>(null);
   const [error, setError] = useState("");
 
   const onSubmit = async (data: FormData) => {
@@ -213,7 +230,7 @@ export default function Page() {
                     <CreditCard className="w-8 h-8 text-gray-400" />
                   </div>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No Payment History Found</h3>
-                  <p className="text-gray-600 mb-4">You haven't made any payments yet.</p>
+                  <p className="text-gray-600 mb-4">You haven&apos;t made any payments yet.</p>
                   <Link href="/payment">
                     <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Make Your First Payment
@@ -222,7 +239,7 @@ export default function Page() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {searchResult.payments.map((payment: any) => (
+                  {searchResult.payments.map((payment: Payment) => (
                     <div
                       key={payment.id}
                       className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
@@ -271,7 +288,7 @@ export default function Page() {
             <div className="p-6 text-center">
               <h3 className="font-medium text-gray-900 mb-2">Need Help?</h3>
               <p className="text-sm text-gray-600 mb-4">
-                Can't find your payment records or having trouble with receipts?
+                Can&apos;t find your payment records or having trouble with receipts?
               </p>
               <div className="flex flex-row gap-2 justify-center">
                 <button className="inline-flex items-center p-3 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">

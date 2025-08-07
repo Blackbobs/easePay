@@ -8,7 +8,7 @@ import {
   createColumnHelper,
   getFilteredRowModel,
 } from "@tanstack/react-table"
-import { Search, Filter, Download, ArrowLeft } from "lucide-react"
+import { Search, Filter, Download } from "lucide-react"
 
 interface Transaction {
   id: string
@@ -163,11 +163,12 @@ export default function TransactionsPage() {
     },
   })
 
+  const filteredRows = table.getFilteredRowModel().rows
+
   const total = useMemo(() => {
-    return table.getFilteredRowModel().rows.reduce(
-      (sum, row) => sum + row.original.amount, 0
-    )
-  }, [table.getFilteredRowModel().rows])
+    return filteredRows.reduce((sum, row) => sum + row.original.amount, 0)
+  }, [filteredRows])
+  
 
   return (
     <div className="min-h-screen bg-gray-50">

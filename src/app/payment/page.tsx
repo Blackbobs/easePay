@@ -125,7 +125,7 @@ const Page = () => {
       setSubmitting(true);
       try {
         const res = await axios.post(
-          "https://easypay-backend-z1yc.onrender.com/api/v1/transaction",
+          "https://easypay-backend-z1yc.onrender.com/api/v1/transactions",
           data
         );
         toast.success("Payment submitted successfully 🎉");

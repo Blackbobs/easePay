@@ -3,7 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --color-primary: #008e9b;
+  /* --color-primary: #008e9b; */
+  --color-primary: #1614a8;
   --color-secondary: #4d8076;
 }
 

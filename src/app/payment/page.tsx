@@ -43,7 +43,7 @@ enum College {
   COLVET = "COLVET",
 }
 
-export enum Hostel {
+enum Hostel {
   IYAT = "IYAT",
   PRINCESS_SOBOYEJO_MARBLE = "Princess SOboyejo(MARBLE)",
   OLD_NEEDS = "OLD NEEDS",

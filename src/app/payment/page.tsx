@@ -401,7 +401,7 @@ const Page = () => {
               <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
                 <Wallet size={20} color="#555" />
                 <input
-                  {...register("amount", { required: "Amount is required" })}
+                  {...register("amount", { required: "Amount is required", valueAsNumber: true })}
                   type="number"
                   className="focus:outline-none w-full"
                   placeholder="25000"

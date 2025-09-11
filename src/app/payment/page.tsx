@@ -199,6 +199,26 @@ const Page = () => {
               </small>
             </div>
 
+            <div className="mt-4 bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-200 shadow-sm">
+  <h3 className="text-sm font-semibold text-indigo-800 mb-2">
+    Payment Information
+  </h3>
+  <ul className="text-sm text-gray-700 space-y-1">
+    <li>
+      🎓 <strong>Freshers:</strong> ₦4,000
+    </li>
+    <li>
+      📘 <strong>Stalites:</strong> ₦3,000
+    </li>
+    <li>
+      ⚡ <strong>Processing Fee:</strong> ₦200
+    </li>
+  </ul>
+  <p className="mt-2 text-xs text-gray-600 italic">
+    Kindly ensure you pay the correct amount before uploading your proof of payment.
+  </p>
+</div>
+
             {/* Upload proof */}
             <div>
               <label className="block text-sm font-medium mb-1">
@@ -375,8 +395,11 @@ const Page = () => {
             <label className="block text-sm font-medium">Hostel</label>
             <select
               {...register("hostel", { required: true })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="focus:outline-none w-full border border-gray-300 rounded-full bg-gray-100 p-3 rounded-full"
             >
+               <option value="" disabled>
+                    Select Hostel
+                  </option>
               {Object.values(Hostel).map((hostel) => (
                 <option key={hostel} value={hostel}>
                   {hostel}

@@ -8,14 +8,12 @@ import {
   Upload,
   User,
   GraduationCap,
-  Building2,
-  Landmark,
-  Wallet,
   Phone,
   FileSpreadsheet,
+  DoorClosed,
 } from "lucide-react";
 import axios from "axios";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import axiosConfig from "@/utils/axios-config";
 
 interface FormValues {
@@ -25,27 +23,32 @@ interface FormValues {
   phoneNumber: string;
   college: string;
   department: string;
-  amount: number;
-  bank: string;
   proofUrl: string;
   dueType: string;
+  hostel: string;
+  roomNumber?: string;
 }
 
 enum College {
   COLAMRUD = "COLAMRUD",
   COLANIM = "COLANIM",
   COLBIOS = "COLBIOS",
+  COLENG = "COLENG",
+  COLERM = "COLERM",
   COLENDS = "COLENDS",
   COLPHYS = "COLPHYS",
+  COLPLANT = "COLPLANT",
+  COLFHEC = "COLFHEC",
+  COLCOMP = "COLCOMP",
   COLVET = "COLVET",
 }
 
-enum Department {
-  CHM = "CHM",
-  CSC = "CSC",
-  MTS = "MTS",
-  PHS = "PHS",
-  STS = "STS"
+export enum Hostel {
+  IYAT = "IYAT",
+  PRINCESS_SOBOYEJO_MARBLE = "Princess SOboyejo(MARBLE)",
+  OLD_NEEDS = "OLD NEEDS",
+  NEW_NEEDS = "NEW NEEDS",
+  OTHERS = "OTHERS",
 }
 
 const Page = () => {
@@ -69,21 +72,19 @@ const Page = () => {
       phoneNumber: "",
       college: "",
       department: "",
-      amount: 0,
-      bank: "",
       proofUrl: "",
       dueType: "",
+      hostel: "",
+      roomNumber: "",
     },
   });
 
-  
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
     try {
-      // 1️⃣ Get signature + config from your backend
       const { data: config } = await axios.get(
         "https://easypay-backend-z1yc.onrender.com/api/v1/cloudinary/upload",
         { params: { folder: "payment_proof" } }
@@ -91,7 +92,6 @@ const Page = () => {
 
       const { apiKey, cloudName, signature, timestamp, folder } = config;
 
-      // 2️⃣ Build the form data
       const formData = new FormData();
       formData.append("file", file);
       formData.append("api_key", apiKey);
@@ -99,7 +99,6 @@ const Page = () => {
       formData.append("signature", signature);
       if (folder) formData.append("folder", folder);
 
-      
       const uploadRes = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
         formData,
@@ -128,14 +127,14 @@ const Page = () => {
         const res = await axiosConfig.post("/transactions", data);
         toast.success("Payment submitted successfully 🎉");
         console.log("🚀 Transaction Saved:", res.data);
-        reset(); 
+        reset();
         setStep(1);
         setProofUploaded(false);
       } catch (err) {
         toast.error("Submission failed. Please try again.");
         console.error("❌ Transaction Failed:", err);
-      }finally {
-        setSubmitting(false); 
+      } finally {
+        setSubmitting(false);
       }
     }
   };
@@ -190,11 +189,14 @@ const Page = () => {
                 Please make your payment to the following account:
               </p>
               <p className="text-sm text-gray-700 mt-2">
-                <strong>Account Name:</strong> EASY PAY INNOVATIONS HUBS || Surprise quyum <br />
+                <strong>Account Name:</strong> EASY PAY INNOVATIONS HUBS ||
+                Surprise quyum <br />
                 <strong>Bank:</strong> Moniepoint <br />
                 <strong>Account Number:</strong> 8068913471
               </p>
-              <small className="text-sm text-gray-700 mt-2">Please add charges of #200</small>
+              <small className="text-sm text-gray-800 mt-2">
+                Processing Fee: #200
+              </small>
             </div>
 
             {/* Upload proof */}
@@ -274,7 +276,7 @@ const Page = () => {
             {/* Matric Number */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Matric Number
+                Matric Number/UTME REG NO.
               </label>
               <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
                 <BookUser size={20} color="#555" />
@@ -318,7 +320,7 @@ const Page = () => {
               )}
             </div>
 
-            {/* ✅ Phone Number */}
+            {/* Phone Number */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Phone Number
@@ -345,91 +347,63 @@ const Page = () => {
               )}
             </div>
 
+            {/* College */}
             <div>
-  <label className="block text-sm font-medium mb-1">College</label>
-  <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
-    <GraduationCap size={20} color="#555" />
-    <select
-      {...register("college", { required: "College is required" })}
-      className="focus:outline-none w-full bg-gray-100 p-3 rounded-full"
-      defaultValue=""
-    >
-      <option value="" disabled>
-        Select College
-      </option>
-      {Object.values(College).map((college) => (
-        <option key={college} value={college}>
-          {college}
-        </option>
-      ))}
-    </select>
-  </div>
-  {errors.college && (
-    <p className="text-sm text-red-500">{errors.college.message}</p>
-  )}
-</div>
-
-{/* Department */}
-<div>
-  <label className="block text-sm font-medium mb-1">Department</label>
-  <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
-    <Building2 size={20} color="#555" />
-    <select
-      {...register("department", { required: "Department is required" })}
-      className="focus:outline-none w-full bg-gray-100 p-3 rounded-full"
-      defaultValue=""
-    >
-      <option value="" disabled>
-        Select Department
-      </option>
-      {Object.values(Department).map((dept) => (
-        <option key={dept} value={dept}>
-          {dept}
-        </option>
-      ))}
-    </select>
-  </div>
-  {errors.department && (
-    <p className="text-sm text-red-500">{errors.department.message}</p>
-  )}
-</div>
-            {/* Amount */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Amount</label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <Wallet size={20} color="#555" />
-                <input
-                  {...register("amount", { required: "Amount is required", valueAsNumber: true })}
-                  type="number"
-                  className="focus:outline-none w-full"
-                  placeholder="25000"
-                />
+              <label className="block text-sm font-medium mb-1">College</label>
+              <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
+                <GraduationCap size={20} color="#555" />
+                <select
+                  {...register("college", { required: "College is required" })}
+                  className="focus:outline-none w-full bg-gray-100 p-3 rounded-full"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select College
+                  </option>
+                  {Object.values(College).map((college) => (
+                    <option key={college} value={college}>
+                      {college}
+                    </option>
+                  ))}
+                </select>
               </div>
-              {errors.amount && (
-                <p className="text-sm text-red-500">{errors.amount.message}</p>
+              {errors.college && (
+                <p className="text-sm text-red-500">{errors.college.message}</p>
               )}
             </div>
 
-            {/* Bank */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Bank</label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <Landmark size={20} color="#555" />
-                <input
-                  {...register("bank", { required: "Bank name is required" })}
-                  className="focus:outline-none w-full"
-                  placeholder="First Bank of Nigeria"
-                />
-              </div>
-              {errors.bank && (
-                <p className="text-sm text-red-500">{errors.bank.message}</p>
-              )}
-            </div>
+            <label className="block text-sm font-medium">Hostel</label>
+            <select
+              {...register("hostel", { required: true })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              {Object.values(Hostel).map((hostel) => (
+                <option key={hostel} value={hostel}>
+                  {hostel}
+                </option>
+              ))}
+            </select>
 
+            {/* Room Number */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Due Type
+                Room Number
               </label>
+              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
+                <DoorClosed size={20} color="#555" />
+                <input
+                  {...register("roomNumber")}
+                  className="focus:outline-none w-full"
+                  placeholder="Example: 203"
+                />
+              </div>
+            </div>
+
+            
+
+            {/* Due Type */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Due Type</label>
               <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
                 <FileSpreadsheet size={20} color="#555" />
                 <select

@@ -22,7 +22,7 @@ interface FormValues {
   email: string;
   phoneNumber: string;
   college: string;
-  department: string;
+  // department: string;
   proofUrl: string;
   dueType: string;
   hostel: string;
@@ -71,7 +71,7 @@ const Page = () => {
       email: "",
       phoneNumber: "",
       college: "",
-      department: "",
+      // department: "",
       proofUrl: "",
       dueType: "",
       hostel: "",

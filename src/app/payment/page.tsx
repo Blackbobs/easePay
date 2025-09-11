@@ -24,7 +24,7 @@ interface FormValues {
   phoneNumber: string;
   college: string;
   department: string;
-  amount: string;
+  amount: number;
   bank: string;
   proofUrl: string;
   dueType: string;
@@ -68,7 +68,7 @@ const Page = () => {
       phoneNumber: "",
       college: "",
       department: "",
-      amount: "",
+      amount: 0,
       bank: "",
       proofUrl: "",
       dueType: "",

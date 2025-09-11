@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast"; 
+import axiosConfig from "@/utils/axios-config";
 
 interface FormValues {
   fullName: string;
@@ -124,10 +125,7 @@ const Page = () => {
     } else {
       setSubmitting(true);
       try {
-        const res = await axios.post(
-          "https://easypay-backend-z1yc.onrender.com/api/v1/transactions",
-          data
-        );
+        const res = await axiosConfig.post("/transactions", data);
         toast.success("Payment submitted successfully 🎉");
         console.log("🚀 Transaction Saved:", res.data);
         reset(); 

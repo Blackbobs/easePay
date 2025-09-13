@@ -219,60 +219,7 @@ const Page = () => {
   </p>
 </div>
 
-            {/* Upload proof */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Upload Proof of Payment
-              </label>
-              <div className="border border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-50">
-                <input
-                  type="file"
-                  accept="image/*,application/pdf"
-                  className="hidden"
-                  id="proofUpload"
-                  onChange={handleFileUpload}
-                />
-
-                <label
-                  htmlFor="proofUpload"
-                  className="flex flex-col items-center gap-2 cursor-pointer"
-                >
-                  <Upload size={28} className="text-gray-500" />
-                  {uploading ? (
-                    <span className="text-sm text-gray-600">Uploading...</span>
-                  ) : proofUploaded ? (
-                    <span className="text-sm text-green-600">
-                      ✅ Proof uploaded successfully
-                    </span>
-                  ) : (
-                    <span className="text-sm text-gray-600">
-                      Click to upload receipt (JPG, PNG, PDF)
-                    </span>
-                  )}
-                </label>
-              </div>
-              {errors.proofUrl && (
-                <p className="text-sm text-red-500">
-                  {errors.proofUrl.message}
-                </p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={!proofUploaded || uploading}
-              className={`w-full py-3 rounded-full text-white ${
-                proofUploaded ? "bg-primary" : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Continue
-            </button>
-          </div>
-        ) : (
-          /* STEP 2: Student Details */
-          <div className="space-y-6 bg-white p-6 shadow-lg rounded-xl">
-            {/* Full Name */}
-            <div>
+  <div>
               <label className="block text-sm font-medium mb-1">
                 Full Name
               </label>
@@ -448,6 +395,61 @@ const Page = () => {
               )}
             </div>
 
+          
+          
+
+             <button
+              type="submit"
+              disabled={!isValid}
+              className={`w-full py-3 rounded-full text-white ${
+                isValid ? "bg-primary" : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              Continue
+            </button>
+          </div>
+        ) : (
+          /* STEP 2: Student Details */
+          <div className="space-y-6 bg-white p-6 shadow-lg rounded-xl">
+             <div>
+              <label className="block text-sm font-medium mb-1">
+                Upload Proof of Payment
+              </label>
+              <div className="border border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-50">
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  className="hidden"
+                  id="proofUpload"
+                  onChange={handleFileUpload}
+                />
+
+                <label
+                  htmlFor="proofUpload"
+                  className="flex flex-col items-center gap-2 cursor-pointer"
+                >
+                  <Upload size={28} className="text-gray-500" />
+                  {uploading ? (
+                    <span className="text-sm text-gray-600">Uploading...</span>
+                  ) : proofUploaded ? (
+                    <span className="text-sm text-green-600">
+                      ✅ Proof uploaded successfully
+                    </span>
+                  ) : (
+                    <span className="text-sm text-gray-600">
+                      Click to upload receipt (JPG, PNG, PDF)
+                    </span>
+                  )}
+                </label>
+              </div>
+              {errors.proofUrl && (
+                <p className="text-sm text-red-500">
+                  {errors.proofUrl.message}
+                </p>
+              )}
+            </div>
+          
+
             {/* Actions */}
             <div className="flex space-x-4 pt-4">
               <button
@@ -459,10 +461,10 @@ const Page = () => {
               </button>
               <button
                 type="submit"
-                disabled={!isValid || submitting}
+                disabled={!proofUploaded || submitting}
                 className={`flex-1 py-2 rounded-full text-white ${
-                  isValid && !submitting
-                    ? "bg-primary cursor-pointer"
+                  proofUploaded && !submitting
+                    ? "bg-primary"
                     : "bg-gray-400 cursor-not-allowed"
                 }`}
               >

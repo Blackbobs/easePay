@@ -220,10 +220,10 @@ const Page = () => {
                 ₦150
               </p>
               <p className="text-xs text-gray-700 italic">
-                Freshers: ₦4150
+                Freshers: ₦4,150
               </p>
               <p className="text-xs text-gray-700 italic">
-                Staylites: ₦3150
+                Staylites: ₦3,150
               </p>
               <p className="mt-1 text-xs text-gray-600 italic">
                 Before uploading your proof of payment

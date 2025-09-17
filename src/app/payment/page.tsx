@@ -219,12 +219,12 @@ const Page = () => {
                 Kindly ensure you pay the correct amount with processing fee
                 ₦150
               </p>
-              <small className="text-xs text-gray-700 italic">
+              <p className="text-xs text-gray-700 italic">
                 Freshers: ₦4150
-              </small>
-              <small className="text-xs text-gray-700 italic">
+              </p>
+              <p className="text-xs text-gray-700 italic">
                 Staylites: ₦3150
-              </small>
+              </p>
               <p className="mt-1 text-xs text-gray-600 italic">
                 Before uploading your proof of payment
               </p>

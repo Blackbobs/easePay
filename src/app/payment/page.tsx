@@ -41,7 +41,7 @@ enum College {
   COLFHEC = "COLFHEC",
   COLCOMP = "COLCOMP",
   COLVET = "COLVET",
-  FUMMSA = "FUMMSA"
+  FUMMSA = "FUMMSA",
 }
 
 enum Hostel {
@@ -201,26 +201,36 @@ const Page = () => {
             </div>
 
             <div className="mt-4 bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-200 shadow-sm">
-  <h3 className="text-sm font-semibold text-indigo-800 mb-2">
-    Payment Information
-  </h3>
-  <ul className="text-sm text-gray-700 space-y-1">
-    <li>
-      🎓 <strong>Freshers:</strong> ₦4,000
-    </li>
-    <li>
-      📘 <strong>Stalites:</strong> ₦3,000
-    </li>
-    <li>
-      ⚡ <strong>Processing Fee:</strong> ₦150
-    </li>
-  </ul>
-  <p className="mt-2 text-xs text-gray-600 italic">
-    Kindly ensure you pay the correct amount before uploading your proof of payment.
-  </p>
-</div>
+              <h3 className="text-sm font-semibold text-indigo-800 mb-2">
+                Payment Information
+              </h3>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>
+                  🎓 <strong>Freshers:</strong> ₦4,000
+                </li>
+                <li>
+                  📘 <strong>Stalites:</strong> ₦3,000
+                </li>
+                <li>
+                  ⚡ <strong>Processing Fee:</strong> ₦150
+                </li>
+              </ul>
+              <p className="mt-2 text-xs text-gray-600 italic">
+                Kindly ensure you pay the correct amount with processing fee
+                ₦150
+              </p>
+              <small className="text-xs text-gray-700 italic">
+                Freshers: ₦4150
+              </small>
+              <small className="text-xs text-gray-700 italic">
+                Staylites: ₦3150
+              </small>
+              <p className="mt-1 text-xs text-gray-600 italic">
+                Before uploading your proof of payment
+              </p>
+            </div>
 
-  <div>
+            <div>
               <label className="block text-sm font-medium mb-1">
                 Full Name
               </label>
@@ -345,9 +355,9 @@ const Page = () => {
               {...register("hostel", { required: true })}
               className="focus:outline-none w-full border border-gray-300 rounded-full bg-gray-100 p-3 rounded-full"
             >
-               <option value="" disabled>
-                    Select Hostel
-                  </option>
+              <option value="" disabled>
+                Select Hostel
+              </option>
               {Object.values(Hostel).map((hostel) => (
                 <option key={hostel} value={hostel}>
                   {hostel}
@@ -369,8 +379,6 @@ const Page = () => {
                 />
               </div>
             </div>
-
-            
 
             {/* Due Type */}
             <div>
@@ -396,10 +404,7 @@ const Page = () => {
               )}
             </div>
 
-          
-          
-
-             <button
+            <button
               type="submit"
               disabled={!isValid}
               className={`w-full py-3 rounded-full text-white ${
@@ -412,7 +417,7 @@ const Page = () => {
         ) : (
           /* STEP 2: Student Details */
           <div className="space-y-6 bg-white p-6 shadow-lg rounded-xl">
-             <div>
+            <div>
               <label className="block text-sm font-medium mb-1">
                 Upload Proof of Payment
               </label>
@@ -449,7 +454,6 @@ const Page = () => {
                 </p>
               )}
             </div>
-          
 
             {/* Actions */}
             <div className="flex space-x-4 pt-4">

@@ -211,7 +211,7 @@ const Page = () => {
       📘 <strong>Stalites:</strong> ₦3,000
     </li>
     <li>
-      ⚡ <strong>Processing Fee:</strong> ₦200
+      ⚡ <strong>Processing Fee:</strong> ₦150
     </li>
   </ul>
   <p className="mt-2 text-xs text-gray-600 italic">

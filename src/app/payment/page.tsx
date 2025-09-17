@@ -41,6 +41,7 @@ enum College {
   COLFHEC = "COLFHEC",
   COLCOMP = "COLCOMP",
   COLVET = "COLVET",
+  FUMMSA = "FUMMSA"
 }
 
 enum Hostel {
@@ -195,7 +196,7 @@ const Page = () => {
                 <strong>Account Number:</strong> 8068913471
               </p>
               <small className="text-sm text-gray-800 mt-2">
-                Processing Fee: #200
+                Processing Fee: #150
               </small>
             </div>
 

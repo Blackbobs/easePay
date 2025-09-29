@@ -126,6 +126,78 @@ const Page = () => {
       setSubmitting(true);
       try {
         const res = await axiosConfig.post("/transactions", data);
+        console.log(res.data)
+        if (res.data) {
+          const reference = res.data.data?.reference || "N/A";
+          const emailHtml = `
+            <div style="font-family: Arial, sans-serif; background-color: #f9fafb; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+          
+          <!-- Header -->
+          <div style="background: #4f46e5; color: #ffffff; padding: 16px; text-align: center;">
+            <h2 style="margin: 0;">EasyPay</h2>
+            <p style="margin: 0; font-size: 14px;">Payment Confirmation</p>
+          </div>
+          
+          <!-- Body -->
+          <div style="padding: 24px; color: #333333; line-height: 1.6;">
+            <h3 style="margin-top: 0;">Hi ${res.data.data?.fullName || "User"},</h3>
+            <p>We’re happy to let you know that we’ve <b>received your payment</b>.</p>
+            
+            <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 0;"><b>Status:</b> ✅ Payment Received</p>
+              // <p style="margin: 0;"><b>Reference:</b> ${reference}</p>
+            </div>
+    
+            <p>Once confirmed, we’ll send your official receipt. Please keep the reference for your records.</p>
+    
+            <!-- QR Code -->
+            <div style="text-align: center; margin-top: 20px;">
+              <p style="font-size: 14px; color: #555;">Scan this QR code to verify your transaction:</p>
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${reference}" 
+                   alt="QR Code for Payment Reference" style="margin-top: 10px;" />
+            </div>
+    
+            <p style="margin-top: 24px;">Thanks for using <b>EasyPay</b> 🎉</p>
+          </div>
+          
+          <!-- Footer -->
+          <div style="background: #f3f4f6; padding: 12px; text-align: center; font-size: 12px; color: #666;">
+            © ${String(new Date().getFullYear())} EasyPay. All rights reserved.
+          </div>
+        </div>
+      </div>
+          `;
+        
+          try {
+            console.log("📨 Sending email to:", data.email);
+            const mailRes = await fetch("/api/mailer", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                to: data.email,
+                subject: "✅ Payment Received - EasyPay",
+                html: emailHtml,
+              }),
+            });
+        
+            const mailData = await mailRes.json();
+            console.log("📧 Mailer response:", mailData);
+        
+            if (!mailRes.ok || !mailData.success) {
+              toast.error("Email could not be sent");
+            } else {
+              toast.success("Receipt email sent!");
+            }
+          } catch (err) {
+            console.error("❌ Mailer call failed:", err);
+            toast.error("Email sending failed");
+          }
+        }
+        
+        toast.success("Payment submitted successfully 🎉");
+        console.log("🚀 Transaction Saved:", res.data);
+        
         toast.success("Payment submitted successfully 🎉");
         console.log("🚀 Transaction Saved:", res.data);
         reset();
@@ -219,12 +291,8 @@ const Page = () => {
                 Kindly ensure you pay the correct amount with processing fee
                 ₦150
               </p>
-              <p className="text-xs text-gray-700 italic">
-                Freshers: ₦4,150
-              </p>
-              <p className="text-xs text-gray-700 italic">
-                Staylites: ₦3,150
-              </p>
+              <p className="text-xs text-gray-700 italic">Freshers: ₦4,150</p>
+              <p className="text-xs text-gray-700 italic">Staylites: ₦3,150</p>
               <p className="mt-1 text-xs text-gray-600 italic">
                 Before uploading your proof of payment
               </p>

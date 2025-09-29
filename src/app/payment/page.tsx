@@ -265,7 +265,7 @@ const Page = () => {
                 <strong>Account Name:</strong> EASY PAY INNOVATIONS HUBS ||
                 Surprise quyum <br />
                 <strong>Bank:</strong> Moniepoint <br />
-                <strong>Account Number:</strong> 8068913471
+                <strong>Account Number:</strong> 6276821885
               </p>
               <small className="text-sm text-gray-800 mt-2">
                 Processing Fee: #150

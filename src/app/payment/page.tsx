@@ -11,6 +11,9 @@ import {
   Phone,
   FileSpreadsheet,
   DoorClosed,
+  CreditCard,
+  School,
+  CheckCircle2,
 } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -22,11 +25,12 @@ interface FormValues {
   email: string;
   phoneNumber: string;
   college: string;
-  // department: string;
+  department: string;
   proofUrl: string;
   dueType: string;
   hostel: string;
-  roomNumber?: string;
+  amount: string;
+  studentType: string;
 }
 
 enum College {
@@ -52,6 +56,42 @@ enum Hostel {
   OTHERS = "OTHERS",
 }
 
+enum Department {
+  AGAD = "AGAD",
+  AEFM = "AEFM",
+  ARED = "ARED",
+  BCH = "BCH",
+  MCB = "MCB",
+  PAB = "PAB",
+  PAZ = "PAZ",
+  ABE = "ABE",
+  CVE = "CVE",
+  ELE = "ELE",
+  MCE = "MCE",
+  MTE = "MTE",
+  AQFM = "AQFM",
+  EMT = "EMT",
+  FWM = "FWM",
+  WMA = "WMA",
+  FST = "FST",
+  HSM = "HSM",
+  HMT = "HMT",
+  NTD = "NTD",
+  ETS = "ETS",
+  CPT = "CPT",
+  HRT = "HRT",
+  PBST = "PBST",
+  PPCP = "PPCP",
+  SSLM = "SSLM",
+  CHM = "CHM",
+  CSC = "CSC",
+  MTS = "MTS",
+  PHY = "PHY",
+  STS = "STS",
+  VET = "VET",
+  FUMSAA = "FUMSAA",
+}
+
 const Page = () => {
   const [step, setStep] = useState(1);
   const [uploading, setUploading] = useState(false);
@@ -72,11 +112,12 @@ const Page = () => {
       email: "",
       phoneNumber: "",
       college: "",
-      // department: "",
+      department: "",
       proofUrl: "",
       dueType: "",
       hostel: "",
-      roomNumber: "",
+      amount: "",
+      studentType: "",
     },
   });
 
@@ -142,14 +183,14 @@ const Page = () => {
           <!-- Body -->
           <div style="padding: 24px; color: #333333; line-height: 1.6;">
             <h3 style="margin-top: 0;">Hi ${res.data.data?.fullName || "User"},</h3>
-            <p>We’re happy to let you know that we’ve <b>received your payment</b>.</p>
+            <p>We're happy to let you know that we've <b>received your payment</b>.</p>
             
             <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0;"><b>Status:</b> ✅ Payment Received</p>
               // <p style="margin: 0;"><b>Reference:</b> ${reference}</p>
             </div>
     
-            <p>Once confirmed, we’ll send your official receipt. Please keep the reference for your records.</p>
+            <p>Once confirmed, we'll send your official receipt. Please keep the reference for your records.</p>
     
             <!-- QR Code -->
             <div style="text-align: center; margin-top: 20px;">
@@ -213,340 +254,436 @@ const Page = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <h1 className="text-xl font-bold text-gray-800">easePay Payment</h1>
-        <p className="text-gray-500 text-xs">
-          Submit your proof of payment & details in two easy steps
-        </p>
-      </div>
-
-      {/* Step indicator */}
-      <div className="mb-6">
-        <div className="flex items-center justify-center space-x-4">
-          <div
-            className={`flex items-center justify-center w-8 h-8 rounded-full ${
-              step >= 1 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"
-            }`}
-          >
-            1
-          </div>
-          <div
-            className={`h-1 w-16 ${step >= 2 ? "bg-primary" : "bg-gray-200"}`}
-          ></div>
-          <div
-            className={`flex items-center justify-center w-8 h-8 rounded-full ${
-              step === 2 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"
-            }`}
-          >
-            2
-          </div>
+   <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="mb-10 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">easePay Payment</h1>
+          <p className="text-gray-600 text-sm">Submit your proof of payment & details in two easy steps</p>
         </div>
-        <div className="flex justify-between text-sm text-gray-600 mt-2 px-4 max-w-[230px] mx-auto">
-          <span>Proof Upload</span>
-          <span>Student Details</span>
-        </div>
-      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {step === 1 ? (
-          /* STEP 1: Proof Upload */
-          <div className="space-y-6 bg-white p-6 shadow-lg rounded-xl">
-            {/* Account details */}
-            <div className="bg-gray-100 p-4 rounded border border-gray-300">
-              <h2 className="font-semibold text-gray-800 mb-2">
-                Payment Account Details
-              </h2>
-              <p className="text-sm text-gray-700">
-                Please make your payment to the following account:
-              </p>
-              <p className="text-sm text-gray-700 mt-2">
-                <strong>Account Name:</strong> EASY PAY INNOVATIONS HUBS ||
-                Surprise quyum <br />
-                <strong>Bank:</strong> Moniepoint <br />
-                <strong>Account Number:</strong> 6276821885
-              </p>
-              <small className="text-sm text-gray-800 mt-2">
-                Processing Fee: #150
-              </small>
-            </div>
-
-            <div className="mt-4 bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-200 shadow-sm">
-              <h3 className="text-sm font-semibold text-indigo-800 mb-2">
-                Payment Information
-              </h3>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>
-                  🎓 <strong>Freshers:</strong> ₦4,000
-                </li>
-                <li>
-                  📘 <strong>Stalites:</strong> ₦3,000
-                </li>
-                <li>
-                  ⚡ <strong>Processing Fee:</strong> ₦150
-                </li>
-              </ul>
-              <p className="mt-2 text-xs text-gray-600 italic">
-                Kindly ensure you pay the correct amount with processing fee
-                ₦150
-              </p>
-              <p className="text-xs text-gray-700 italic">Freshers: ₦4,150</p>
-              <p className="text-xs text-gray-700 italic">Staylites: ₦3,150</p>
-              <p className="mt-1 text-xs text-gray-600 italic">
-                Before uploading your proof of payment
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Full Name
-              </label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <User size={20} color="#555" />
-                <input
-                  {...register("fullName", {
-                    required: "Full name is required",
-                  })}
-                  className="focus:outline-none w-full"
-                  placeholder="John Doe"
-                />
-              </div>
-              {errors.fullName && (
-                <p className="text-sm text-red-500">
-                  {errors.fullName.message}
-                </p>
-              )}
-            </div>
-
-            {/* Matric Number */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Matric Number/UTME REG NO.
-              </label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <BookUser size={20} color="#555" />
-                <input
-                  {...register("matricNumber", {
-                    required: "Matric number is required",
-                  })}
-                  className="focus:outline-none w-full"
-                  placeholder="20202928"
-                />
-              </div>
-              {errors.matricNumber && (
-                <p className="text-sm text-red-500">
-                  {errors.matricNumber.message}
-                </p>
-              )}
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Email Address
-              </label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <Mail size={20} color="#555" />
-                <input
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: "Enter a valid email",
-                    },
-                  })}
-                  type="email"
-                  className="focus:outline-none w-full"
-                  placeholder="your@email.com"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
-              )}
-            </div>
-
-            {/* Phone Number */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Phone Number
-              </label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <Phone size={20} color="#555" />
-                <input
-                  {...register("phoneNumber", {
-                    required: "Phone number is required",
-                    pattern: {
-                      value: /^[0-9]{10,15}$/,
-                      message: "Enter a valid phone number",
-                    },
-                  })}
-                  type="tel"
-                  className="focus:outline-none w-full"
-                  placeholder="08012345678"
-                />
-              </div>
-              {errors.phoneNumber && (
-                <p className="text-sm text-red-500">
-                  {errors.phoneNumber.message}
-                </p>
-              )}
-            </div>
-
-            {/* College */}
-            <div>
-              <label className="block text-sm font-medium mb-1">College</label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
-                <GraduationCap size={20} color="#555" />
-                <select
-                  {...register("college", { required: "College is required" })}
-                  className="focus:outline-none w-full bg-gray-100 p-3 rounded-full"
-                  defaultValue=""
+        {/* Step indicator */}
+        <div className="mb-10">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-3">
+              {/* Step 1 */}
+              <div className="flex flex-col items-center gap-2">
+                <div
+                  className={`flex items-center justify-center w-12 h-12 rounded-full font-semibold text-sm transition-all duration-300 ${
+                    step >= 1 ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-gray-200 text-gray-500"
+                  }`}
                 >
-                  <option value="" disabled>
-                    Select College
-                  </option>
-                  {Object.values(College).map((college) => (
-                    <option key={college} value={college}>
-                      {college}
+                  {step > 1 ? <CheckCircle2 size={20} /> : "1"}
+                </div>
+                <span
+                  className={`text-xs font-medium transition-colors ${step >= 1 ? "text-indigo-600" : "text-gray-500"}`}
+                >
+                  Student Details
+                </span>
+              </div>
+
+              {/* Connector */}
+              <div
+                className={`h-0.5 w-24 transition-all duration-500 ${step >= 2 ? "bg-indigo-600" : "bg-gray-300"}`}
+              ></div>
+
+              {/* Step 2 */}
+              <div className="flex flex-col items-center gap-2">
+                <div
+                  className={`flex items-center justify-center w-12 h-12 rounded-full font-semibold text-sm transition-all duration-300 ${
+                    step === 2 ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-gray-200 text-gray-500"
+                  }`}
+                >
+                  2
+                </div>
+                <span
+                  className={`text-xs font-medium transition-colors ${
+                    step === 2 ? "text-indigo-600" : "text-gray-500"
+                  }`}
+                >
+                  Proof Upload
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {step === 1 ? (
+            /* STEP 1: Student Details */
+            <div className="space-y-6 bg-white p-8 shadow-xl shadow-gray-200/50 rounded-2xl border border-gray-100">
+              {/* Account details */}
+              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-xl border border-indigo-100">
+                <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <CreditCard size={20} className="text-indigo-600" />
+                  Payment Account Details
+                </h2>
+                <p className="text-sm text-gray-700 mb-4">Please make your payment to the following account:</p>
+                <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg space-y-1.5">
+                  <p className="text-sm text-gray-800">
+                    <strong className="text-gray-900">Account Name:</strong> EASY PAY INNOVATIONS HUBS || Surprise quyum
+                  </p>
+                  <p className="text-sm text-gray-800">
+                    <strong className="text-gray-900">Bank:</strong> Moniepoint
+                  </p>
+                  <p className="text-sm text-gray-800">
+                    <strong className="text-gray-900">Account Number:</strong> 6276821885
+                  </p>
+                </div>
+                <p className="text-xs text-gray-600 mt-3">Processing Fee: ₦150</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">💰 Payment Information</h3>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">🎓 Freshers:</span>
+                    <span className="font-semibold text-gray-900">₦4,000</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">📘 Stalites:</span>
+                    <span className="font-semibold text-gray-900">₦3,000</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">⚡ Processing Fee:</span>
+                    <span className="font-semibold text-gray-900">₦150</span>
+                  </div>
+                  <div className="h-px bg-purple-200 my-3"></div>
+                  <div className="flex items-center justify-between text-sm font-semibold">
+                    <span className="text-gray-900">Total (Freshers):</span>
+                    <span className="text-indigo-600">₦4,150</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm font-semibold">
+                    <span className="text-gray-900">Total (Staylites):</span>
+                    <span className="text-indigo-600">₦3,150</span>
+                  </div>
+                </div>
+                <p className="mt-4 text-xs text-gray-600 italic">
+                  Kindly ensure you pay the correct amount with processing fee before uploading your proof of payment
+                </p>
+              </div>
+
+              {/* Full Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <User size={20} />
+                  </div>
+                  <input
+                    {...register("fullName", {
+                      required: "Full name is required",
+                    })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900"
+                    placeholder="John Doe"
+                  />
+                </div>
+                {errors.fullName && <p className="text-sm text-red-500 mt-1.5">{errors.fullName.message}</p>}
+              </div>
+
+              {/* Matric Number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Matric Number/UTME REG NO.</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <BookUser size={20} />
+                  </div>
+                  <input
+                    {...register("matricNumber", {
+                      required: "Matric number is required",
+                    })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900"
+                    placeholder="20202928"
+                  />
+                </div>
+                {errors.matricNumber && <p className="text-sm text-red-500 mt-1.5">{errors.matricNumber.message}</p>}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <Mail size={20} />
+                  </div>
+                  <input
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Enter a valid email",
+                      },
+                    })}
+                    type="email"
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900"
+                    placeholder="your@email.com"
+                  />
+                </div>
+                {errors.email && <p className="text-sm text-red-500 mt-1.5">{errors.email.message}</p>}
+              </div>
+
+              {/* Phone Number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Phone Number</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <Phone size={20} />
+                  </div>
+                  <input
+                    {...register("phoneNumber", {
+                      required: "Phone number is required",
+                      pattern: {
+                        value: /^[0-9]{10,15}$/,
+                        message: "Enter a valid phone number",
+                      },
+                    })}
+                    type="tel"
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900"
+                    placeholder="08012345678"
+                  />
+                </div>
+                {errors.phoneNumber && <p className="text-sm text-red-500 mt-1.5">{errors.phoneNumber.message}</p>}
+              </div>
+
+              {/* College */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">College</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <GraduationCap size={20} />
+                  </div>
+                  <select
+                    {...register("college", { required: "College is required" })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select College
                     </option>
-                  ))}
-                </select>
+                    {Object.values(College).map((college) => (
+                      <option key={college} value={college}>
+                        {college}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {errors.college && <p className="text-sm text-red-500 mt-1.5">{errors.college.message}</p>}
               </div>
-              {errors.college && (
-                <p className="text-sm text-red-500">{errors.college.message}</p>
-              )}
-            </div>
 
-            <label className="block text-sm font-medium">Hostel</label>
-            <select
-              {...register("hostel", { required: true })}
-              className="focus:outline-none w-full border border-gray-300 rounded-full bg-gray-100 p-3 rounded-full"
-            >
-              <option value="" disabled>
-                Select Hostel
-              </option>
-              {Object.values(Hostel).map((hostel) => (
-                <option key={hostel} value={hostel}>
-                  {hostel}
-                </option>
-              ))}
-            </select>
-
-            {/* Room Number */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Room Number
-              </label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 p-3 flex items-center gap-2">
-                <DoorClosed size={20} color="#555" />
-                <input
-                  {...register("roomNumber")}
-                  className="focus:outline-none w-full"
-                  placeholder="Example: 203"
-                />
+              {/* Department */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Department</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <School size={20} />
+                  </div>
+                  <select
+                    {...register("department", {
+                      required: "Department is required",
+                    })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Department
+                    </option>
+                    {Object.values(Department).map((department) => (
+                      <option key={department} value={department}>
+                        {department}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {errors.department && <p className="text-sm text-red-500 mt-1.5">{errors.department.message}</p>}
               </div>
-            </div>
 
-            {/* Due Type */}
-            <div>
-              <label className="block text-sm font-medium mb-1">Due Type</label>
-              <div className="w-full border border-gray-300 rounded-full bg-gray-100 px-3 flex items-center">
-                <FileSpreadsheet size={20} color="#555" />
-                <select
-                  {...register("dueType", { required: "Due type is required" })}
-                  className="focus:outline-none w-full bg-gray-100 p-3 rounded-full"
-                  defaultValue=""
-                >
-                  <option value="" disabled>
-                    Select Due Type
-                  </option>
-                  <option value="college">College</option>
-                  <option value="department">Department</option>
-                  <option value="hostel">Hostel</option>
-                  <option value="sug">SUG</option>
-                </select>
+              {/* Student Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Student Type</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <User size={20} />
+                  </div>
+                  <select
+                    {...register("studentType", {
+                      required: "Student type is required",
+                    })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Student Type
+                    </option>
+                    <option value="fresher">Fresher</option>
+                    <option value="staylite">Staylite</option>
+                  </select>
+                </div>
+                {errors.studentType && <p className="text-sm text-red-500 mt-1.5">{errors.studentType.message}</p>}
               </div>
-              {errors.dueType && (
-                <p className="text-sm text-red-500">{errors.dueType.message}</p>
-              )}
-            </div>
 
-            <button
-              type="submit"
-              disabled={!isValid}
-              className={`w-full py-3 rounded-full text-white ${
-                isValid ? "bg-primary" : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Continue
-            </button>
-          </div>
-        ) : (
-          /* STEP 2: Student Details */
-          <div className="space-y-6 bg-white p-6 shadow-lg rounded-xl">
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Upload Proof of Payment
-              </label>
-              <div className="border border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer bg-gray-50">
-                <input
-                  type="file"
-                  accept="image/*,application/pdf"
-                  className="hidden"
-                  id="proofUpload"
-                  onChange={handleFileUpload}
-                />
-
-                <label
-                  htmlFor="proofUpload"
-                  className="flex flex-col items-center gap-2 cursor-pointer"
-                >
-                  <Upload size={28} className="text-gray-500" />
-                  {uploading ? (
-                    <span className="text-sm text-gray-600">Uploading...</span>
-                  ) : proofUploaded ? (
-                    <span className="text-sm text-green-600">
-                      ✅ Proof uploaded successfully
-                    </span>
-                  ) : (
-                    <span className="text-sm text-gray-600">
-                      Click to upload receipt (JPG, PNG, PDF)
-                    </span>
-                  )}
-                </label>
+              {/* Amount */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Amount (₦)</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <CreditCard size={20} />
+                  </div>
+                  <select
+                    {...register("amount", { required: "Amount is required" })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Amount
+                    </option>
+                    <option value="4000">₦4,000</option>
+                    <option value="3000">₦3,000</option>
+                  </select>
+                </div>
+                {errors.amount && <p className="text-sm text-red-500 mt-1.5">{errors.amount.message}</p>}
               </div>
-              {errors.proofUrl && (
-                <p className="text-sm text-red-500">
-                  {errors.proofUrl.message}
-                </p>
-              )}
-            </div>
 
-            {/* Actions */}
-            <div className="flex space-x-4 pt-4">
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="flex-1 border border-gray-300 py-2 rounded-full text-gray-700"
-              >
-                Back
-              </button>
+              {/* Hostel */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Hostel</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <DoorClosed size={20} />
+                  </div>
+                  <select
+                    {...register("hostel", { required: "Hostel is required" })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Hostel
+                    </option>
+                    {Object.values(Hostel).map((hostel) => (
+                      <option key={hostel} value={hostel}>
+                        {hostel}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {errors.hostel && <p className="text-sm text-red-500 mt-1.5">{errors.hostel.message}</p>}
+              </div>
+
+              {/* Due Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Due Type</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <FileSpreadsheet size={20} />
+                  </div>
+                  <select
+                    {...register("dueType", { required: "Due type is required" })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Due Type
+                    </option>
+                    <option value="college">College</option>
+                    <option value="department">Department</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="sug">SUG</option>
+                  </select>
+                </div>
+                {errors.dueType && <p className="text-sm text-red-500 mt-1.5">{errors.dueType.message}</p>}
+              </div>
+
               <button
                 type="submit"
-                disabled={!proofUploaded || submitting}
-                className={`flex-1 py-2 rounded-full text-white ${
-                  proofUploaded && !submitting
-                    ? "bg-primary"
-                    : "bg-gray-400 cursor-not-allowed"
+                disabled={!isValid}
+                className={`w-full py-4 rounded-xl text-white font-semibold transition-all duration-200 ${
+                  isValid
+                    ? "bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5"
+                    : "bg-gray-300 cursor-not-allowed"
                 }`}
               >
-                {submitting ? "Submitting..." : "Submit"}
+                Continue to Upload Proof
               </button>
             </div>
-          </div>
-        )}
-      </form>
+          ) : (
+            /* STEP 2: Proof Upload */
+            <div className="space-y-6 bg-white p-8 shadow-xl shadow-gray-200/50 rounded-2xl border border-gray-100">
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-3">Upload Proof of Payment</label>
+                <div
+                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 ${
+                    proofUploaded
+                      ? "border-green-300 bg-green-50"
+                      : "border-gray-300 bg-gray-50 hover:border-indigo-400 hover:bg-indigo-50/50"
+                  }`}
+                >
+                  <input
+                    type="file"
+                    accept="image/*,application/pdf"
+                    className="hidden"
+                    id="proofUpload"
+                    onChange={handleFileUpload}
+                  />
+
+                  <label htmlFor="proofUpload" className="flex flex-col items-center gap-3 cursor-pointer">
+                    {uploading ? (
+                      <>
+                        <div className="w-12 h-12 rounded-full border-4 border-indigo-200 border-t-indigo-600 animate-spin"></div>
+                        <span className="text-sm text-gray-600 font-medium">Uploading...</span>
+                      </>
+                    ) : proofUploaded ? (
+                      <>
+                        <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
+                          <CheckCircle2 size={28} className="text-green-600" />
+                        </div>
+                        <span className="text-sm text-green-700 font-semibold">✅ Proof uploaded successfully</span>
+                        <span className="text-xs text-gray-500">Click to upload a different file</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center">
+                          <Upload size={28} className="text-indigo-600" />
+                        </div>
+                        <span className="text-sm text-gray-700 font-medium">Click to upload receipt</span>
+                        <span className="text-xs text-gray-500">JPG, PNG, or PDF (Max 10MB)</span>
+                      </>
+                    )}
+                  </label>
+                </div>
+                {errors.proofUrl && <p className="text-sm text-red-500 mt-2">{errors.proofUrl.message}</p>}
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="flex-1 border-2 border-gray-300 py-3.5 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                >
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  disabled={!proofUploaded || submitting}
+                  className={`flex-1 py-3.5 rounded-xl text-white font-semibold transition-all duration-200 ${
+                    proofUploaded && !submitting
+                      ? "bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
+                >
+                  {submitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                      Submitting...
+                    </span>
+                  ) : (
+                    "Submit Payment"
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

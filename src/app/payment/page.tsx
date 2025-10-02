@@ -31,6 +31,7 @@ interface FormValues {
   hostel: string;
   amount: string;
   studentType: string;
+  level: string;
 }
 
 enum College {
@@ -125,6 +126,7 @@ const Page = () => {
       hostel: "",
       amount: "",
       studentType: "",
+      level: "",
     },
   });
 
@@ -328,7 +330,7 @@ const Page = () => {
                 <p className="text-sm text-gray-700 mb-4">Please make your payment to the following account:</p>
                 <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg space-y-1.5">
                   <p className="text-sm text-gray-800">
-                    <strong className="text-gray-900">Account Name:</strong> EASY PAY INNOVATIONS HUBS || Surprise quyum
+                    <strong className="text-gray-900">Account Name:</strong> EASY PAY INNOVATIONS HUBS
                   </p>
                   <p className="text-sm text-gray-800">
                     <strong className="text-gray-900">Bank:</strong> Moniepoint
@@ -502,6 +504,34 @@ const Page = () => {
                   </select>
                 </div>
                 {errors.department && <p className="text-sm text-red-500 mt-1.5">{errors.department.message}</p>}
+              </div>
+
+              {/* Level */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Level</label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
+                    <GraduationCap size={20} />
+                  </div>
+                  <select
+                    {...register("level", {
+                      required: "Level is required",
+                    })}
+                    className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select Level
+                    </option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="600">600</option>
+                  </select>
+                </div>
+                {errors.level && <p className="text-sm text-red-500 mt-1.5">{errors.level.message}</p>}
               </div>
 
               {/* Student Type */}

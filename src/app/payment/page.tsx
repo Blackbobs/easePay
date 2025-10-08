@@ -58,6 +58,11 @@ enum Hostel {
 }
 
 enum Department {
+  ABG = "ABG",
+  ANN = "ANN",
+  PRM = "PRM",
+  ANP = "ANP",
+  APH = "APH",
   AGAD = "AGAD",
   AEFM = "AEFM",
   ARED = "ARED",
@@ -176,7 +181,7 @@ const Page = () => {
       setSubmitting(true);
       try {
         const res = await axiosConfig.post("/transactions", data);
-        console.log(res.data)
+        console.log(res.data);
         if (res.data) {
           const reference = res.data.data?.reference || "N/A";
           const emailHtml = `
@@ -191,12 +196,14 @@ const Page = () => {
           
           <!-- Body -->
           <div style="padding: 24px; color: #333333; line-height: 1.6;">
-            <h3 style="margin-top: 0;">Hi ${res.data.data?.fullName || "User"},</h3>
+            <h3 style="margin-top: 0;">Hi ${
+              res.data.data?.fullName || "User"
+            },</h3>
             <p>We're happy to let you know that we've <b>received your payment</b>.</p>
             
             <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0;"><b>Status:</b> ✅ Payment Received</p>
-              // <p style="margin: 0;"><b>Reference:</b> ${reference}</p>
+              <p style="margin: 0;"><b>Reference:</b> ${reference}</p>
             </div>
     
             <p>Once confirmed, we'll send your official receipt. Please keep the reference for your records.</p>
@@ -218,7 +225,7 @@ const Page = () => {
         </div>
       </div>
           `;
-        
+
           try {
             console.log("📨 Sending email to:", data.email);
             const mailRes = await fetch("/api/mailer", {
@@ -230,10 +237,10 @@ const Page = () => {
                 html: emailHtml,
               }),
             });
-        
+
             const mailData = await mailRes.json();
             console.log("📧 Mailer response:", mailData);
-        
+
             if (!mailRes.ok || !mailData.success) {
               toast.error("Email could not be sent");
             } else {
@@ -244,10 +251,7 @@ const Page = () => {
             toast.error("Email sending failed");
           }
         }
-        
-        toast.success("Payment submitted successfully 🎉");
-        console.log("🚀 Transaction Saved:", res.data);
-        
+
         toast.success("Payment submitted successfully 🎉");
         console.log("🚀 Transaction Saved:", res.data);
         reset();
@@ -263,12 +267,16 @@ const Page = () => {
   };
 
   return (
-   <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-10 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">easePay Payment</h1>
-          <p className="text-gray-600 text-sm">Submit your proof of payment & details in two easy steps</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            easePay Payment
+          </h1>
+          <p className="text-gray-600 text-sm">
+            Submit your proof of payment & details in two easy steps
+          </p>
         </div>
 
         {/* Step indicator */}
@@ -279,13 +287,17 @@ const Page = () => {
               <div className="flex flex-col items-center gap-2">
                 <div
                   className={`flex items-center justify-center w-12 h-12 rounded-full font-semibold text-sm transition-all duration-300 ${
-                    step >= 1 ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-gray-200 text-gray-500"
+                    step >= 1
+                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+                      : "bg-gray-200 text-gray-500"
                   }`}
                 >
                   {step > 1 ? <CheckCircle2 size={20} /> : "1"}
                 </div>
                 <span
-                  className={`text-xs font-medium transition-colors ${step >= 1 ? "text-indigo-600" : "text-gray-500"}`}
+                  className={`text-xs font-medium transition-colors ${
+                    step >= 1 ? "text-indigo-600" : "text-gray-500"
+                  }`}
                 >
                   Student Details
                 </span>
@@ -293,14 +305,18 @@ const Page = () => {
 
               {/* Connector */}
               <div
-                className={`h-0.5 w-24 transition-all duration-500 ${step >= 2 ? "bg-indigo-600" : "bg-gray-300"}`}
+                className={`h-0.5 w-24 transition-all duration-500 ${
+                  step >= 2 ? "bg-indigo-600" : "bg-gray-300"
+                }`}
               ></div>
 
               {/* Step 2 */}
               <div className="flex flex-col items-center gap-2">
                 <div
                   className={`flex items-center justify-center w-12 h-12 rounded-full font-semibold text-sm transition-all duration-300 ${
-                    step === 2 ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-gray-200 text-gray-500"
+                    step === 2
+                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+                      : "bg-gray-200 text-gray-500"
                   }`}
                 >
                   2
@@ -327,23 +343,31 @@ const Page = () => {
                   <CreditCard size={20} className="text-indigo-600" />
                   Payment Account Details
                 </h2>
-                <p className="text-sm text-gray-700 mb-4">Please make your payment to the following account:</p>
+                <p className="text-sm text-gray-700 mb-4">
+                  Please make your payment to the following account:
+                </p>
                 <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg space-y-1.5">
                   <p className="text-sm text-gray-800">
-                    <strong className="text-gray-900">Account Name:</strong> EASY PAY INNOVATIONS HUBS
+                    <strong className="text-gray-900">Account Name:</strong>{" "}
+                    EASY PAY INNOVATIONS HUBS
                   </p>
                   <p className="text-sm text-gray-800">
                     <strong className="text-gray-900">Bank:</strong> Moniepoint
                   </p>
                   <p className="text-sm text-gray-800">
-                    <strong className="text-gray-900">Account Number:</strong> 6276821885
+                    <strong className="text-gray-900">Account Number:</strong>{" "}
+                    6276821885
                   </p>
                 </div>
-                <p className="text-xs text-gray-600 mt-3">Processing Fee: ₦150</p>
+                <p className="text-xs text-gray-600 mt-3">
+                  Processing Fee: ₦150
+                </p>
               </div>
 
               <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
-                <h3 className="text-sm font-semibold text-gray-900 mb-3">💰 Payment Information</h3>
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                  💰 Payment Information
+                </h3>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-700">🎓 Freshers:</span>
@@ -368,13 +392,16 @@ const Page = () => {
                   </div>
                 </div>
                 <p className="mt-4 text-xs text-gray-600 italic">
-                  Kindly ensure you pay the correct amount with processing fee before uploading your proof of payment
+                  Kindly ensure you pay the correct amount with processing fee
+                  before uploading your proof of payment
                 </p>
               </div>
 
               {/* Full Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Full Name
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                     <User size={20} />
@@ -387,12 +414,18 @@ const Page = () => {
                     placeholder="John Doe"
                   />
                 </div>
-                {errors.fullName && <p className="text-sm text-red-500 mt-1.5">{errors.fullName.message}</p>}
+                {errors.fullName && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.fullName.message}
+                  </p>
+                )}
               </div>
 
               {/* Matric Number */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Matric Number/UTME REG NO.</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Matric Number/UTME REG NO.
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                     <BookUser size={20} />
@@ -405,12 +438,18 @@ const Page = () => {
                     placeholder="20202928"
                   />
                 </div>
-                {errors.matricNumber && <p className="text-sm text-red-500 mt-1.5">{errors.matricNumber.message}</p>}
+                {errors.matricNumber && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.matricNumber.message}
+                  </p>
+                )}
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Email Address
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                     <Mail size={20} />
@@ -428,12 +467,18 @@ const Page = () => {
                     placeholder="your@email.com"
                   />
                 </div>
-                {errors.email && <p className="text-sm text-red-500 mt-1.5">{errors.email.message}</p>}
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               {/* Phone Number */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Phone Number
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                     <Phone size={20} />
@@ -451,18 +496,26 @@ const Page = () => {
                     placeholder="08012345678"
                   />
                 </div>
-                {errors.phoneNumber && <p className="text-sm text-red-500 mt-1.5">{errors.phoneNumber.message}</p>}
+                {errors.phoneNumber && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.phoneNumber.message}
+                  </p>
+                )}
               </div>
 
               {/* College */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">College</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  College
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <GraduationCap size={20} />
                   </div>
                   <select
-                    {...register("college", { required: "College is required" })}
+                    {...register("college", {
+                      required: "College is required",
+                    })}
                     className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
                     defaultValue=""
                   >
@@ -476,12 +529,18 @@ const Page = () => {
                     ))}
                   </select>
                 </div>
-                {errors.college && <p className="text-sm text-red-500 mt-1.5">{errors.college.message}</p>}
+                {errors.college && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.college.message}
+                  </p>
+                )}
               </div>
 
               {/* Department */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Department</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Department
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <School size={20} />
@@ -503,12 +562,18 @@ const Page = () => {
                     ))}
                   </select>
                 </div>
-                {errors.department && <p className="text-sm text-red-500 mt-1.5">{errors.department.message}</p>}
+                {errors.department && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.department.message}
+                  </p>
+                )}
               </div>
 
               {/* Level */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Level</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Level
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <GraduationCap size={20} />
@@ -531,12 +596,18 @@ const Page = () => {
                     <option value="600">600</option>
                   </select>
                 </div>
-                {errors.level && <p className="text-sm text-red-500 mt-1.5">{errors.level.message}</p>}
+                {errors.level && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.level.message}
+                  </p>
+                )}
               </div>
 
               {/* Student Type */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Student Type</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Student Type
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <User size={20} />
@@ -555,12 +626,18 @@ const Page = () => {
                     <option value="staylite">Staylite</option>
                   </select>
                 </div>
-                {errors.studentType && <p className="text-sm text-red-500 mt-1.5">{errors.studentType.message}</p>}
+                {errors.studentType && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.studentType.message}
+                  </p>
+                )}
               </div>
 
               {/* Amount */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Amount (₦)</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Amount (₦)
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <CreditCard size={20} />
@@ -577,12 +654,18 @@ const Page = () => {
                     <option value="3000">₦3,000</option>
                   </select>
                 </div>
-                {errors.amount && <p className="text-sm text-red-500 mt-1.5">{errors.amount.message}</p>}
+                {errors.amount && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.amount.message}
+                  </p>
+                )}
               </div>
 
               {/* Hostel */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Hostel</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Hostel
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <DoorClosed size={20} />
@@ -602,18 +685,26 @@ const Page = () => {
                     ))}
                   </select>
                 </div>
-                {errors.hostel && <p className="text-sm text-red-500 mt-1.5">{errors.hostel.message}</p>}
+                {errors.hostel && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.hostel.message}
+                  </p>
+                )}
               </div>
 
               {/* Due Type */}
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Due Type</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Due Type
+                </label>
                 <div className="relative">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10">
                     <FileSpreadsheet size={20} />
                   </div>
                   <select
-                    {...register("dueType", { required: "Due type is required" })}
+                    {...register("dueType", {
+                      required: "Due type is required",
+                    })}
                     className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none text-gray-900 appearance-none cursor-pointer"
                     defaultValue=""
                   >
@@ -626,7 +717,11 @@ const Page = () => {
                     <option value="sug">SUG</option>
                   </select>
                 </div>
-                {errors.dueType && <p className="text-sm text-red-500 mt-1.5">{errors.dueType.message}</p>}
+                {errors.dueType && (
+                  <p className="text-sm text-red-500 mt-1.5">
+                    {errors.dueType.message}
+                  </p>
+                )}
               </div>
 
               <button
@@ -645,7 +740,9 @@ const Page = () => {
             /* STEP 2: Proof Upload */
             <div className="space-y-6 bg-white p-8 shadow-xl shadow-gray-200/50 rounded-2xl border border-gray-100">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-3">Upload Proof of Payment</label>
+                <label className="block text-sm font-medium text-gray-900 mb-3">
+                  Upload Proof of Payment
+                </label>
                 <div
                   className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 ${
                     proofUploaded
@@ -661,32 +758,49 @@ const Page = () => {
                     onChange={handleFileUpload}
                   />
 
-                  <label htmlFor="proofUpload" className="flex flex-col items-center gap-3 cursor-pointer">
+                  <label
+                    htmlFor="proofUpload"
+                    className="flex flex-col items-center gap-3 cursor-pointer"
+                  >
                     {uploading ? (
                       <>
                         <div className="w-12 h-12 rounded-full border-4 border-indigo-200 border-t-indigo-600 animate-spin"></div>
-                        <span className="text-sm text-gray-600 font-medium">Uploading...</span>
+                        <span className="text-sm text-gray-600 font-medium">
+                          Uploading...
+                        </span>
                       </>
                     ) : proofUploaded ? (
                       <>
                         <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
                           <CheckCircle2 size={28} className="text-green-600" />
                         </div>
-                        <span className="text-sm text-green-700 font-semibold">✅ Proof uploaded successfully</span>
-                        <span className="text-xs text-gray-500">Click to upload a different file</span>
+                        <span className="text-sm text-green-700 font-semibold">
+                          ✅ Proof uploaded successfully
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          Click to upload a different file
+                        </span>
                       </>
                     ) : (
                       <>
                         <div className="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center">
                           <Upload size={28} className="text-indigo-600" />
                         </div>
-                        <span className="text-sm text-gray-700 font-medium">Click to upload receipt</span>
-                        <span className="text-xs text-gray-500">JPG, PNG, or PDF (Max 10MB)</span>
+                        <span className="text-sm text-gray-700 font-medium">
+                          Click to upload receipt
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          JPG, PNG, or PDF (Max 10MB)
+                        </span>
                       </>
                     )}
                   </label>
                 </div>
-                {errors.proofUrl && <p className="text-sm text-red-500 mt-2">{errors.proofUrl.message}</p>}
+                {errors.proofUrl && (
+                  <p className="text-sm text-red-500 mt-2">
+                    {errors.proofUrl.message}
+                  </p>
+                )}
               </div>
 
               {/* Actions */}

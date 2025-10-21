@@ -366,7 +366,7 @@ const Page = () => {
 
               <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100">
                 <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                  💰 Payment Information
+                  💰 Payment Information - Hostel
                 </h3>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
@@ -374,7 +374,7 @@ const Page = () => {
                     <span className="font-semibold text-gray-900">₦4,000</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-700">📘 Stalites:</span>
+                    <span className="text-gray-700">📘 Staylites:</span>
                     <span className="font-semibold text-gray-900">₦3,000</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
@@ -391,11 +391,41 @@ const Page = () => {
                     <span className="text-indigo-600">₦3,150</span>
                   </div>
                 </div>
-                <p className="mt-4 text-xs text-gray-600 italic">
-                  Kindly ensure you pay the correct amount with processing fee
-                  before uploading your proof of payment
-                </p>
               </div>
+
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                  💰 Payment Information - Home Science and Management
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">🎓 Freshers:</span>
+                    <span className="font-semibold text-gray-900">₦5,000</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">📘 Staylites:</span>
+                    <span className="font-semibold text-gray-900">₦3,500</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">⚡ Processing Fee:</span>
+                    <span className="font-semibold text-gray-900">₦150</span>
+                  </div>
+                  <div className="h-px bg-green-200 my-3"></div>
+                  <div className="flex items-center justify-between text-sm font-semibold">
+                    <span className="text-gray-900">Total (Freshers):</span>
+                    <span className="text-emerald-600">₦5,150</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm font-semibold">
+                    <span className="text-gray-900">Total (Staylites):</span>
+                    <span className="text-emerald-600">₦3,650</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-600 italic px-2">
+                Kindly ensure you pay the correct amount with processing fee
+                before uploading your proof of payment
+              </p>
 
               {/* Full Name */}
               <div>
@@ -652,6 +682,8 @@ const Page = () => {
                     </option>
                     <option value="4000">₦4,000</option>
                     <option value="3000">₦3,000</option>
+                    <option value="5000">₦5,000</option>
+                    <option value="3500">₦3,500</option>
                   </select>
                 </div>
                 {errors.amount && (

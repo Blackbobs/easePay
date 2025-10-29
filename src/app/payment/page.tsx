@@ -142,7 +142,7 @@ const Page = () => {
     setUploading(true);
     try {
       const { data: config } = await axios.get(
-        "https://easypay-backend-z1yc.onrender.com/api/v1/cloudinary/upload",
+        "https://easypay-backend.vercel.app/api/v1/cloudinary/upload",
         { params: { folder: "payment_proof" } }
       );
 

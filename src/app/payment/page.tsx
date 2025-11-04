@@ -400,7 +400,7 @@ const Page = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-700">🎓 Freshers:</span>
-                    <span className="font-semibold text-gray-900">₦5,000</span>
+                    <span className="font-semibold text-gray-900">₦5,500</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-700">📘 Staylites:</span>
@@ -413,7 +413,7 @@ const Page = () => {
                   <div className="h-px bg-green-200 my-3"></div>
                   <div className="flex items-center justify-between text-sm font-semibold">
                     <span className="text-gray-900">Total (Freshers):</span>
-                    <span className="text-emerald-600">₦5,150</span>
+                    <span className="text-emerald-600">₦5,650</span>
                   </div>
                   <div className="flex items-center justify-between text-sm font-semibold">
                     <span className="text-gray-900">Total (Staylites):</span>
@@ -682,12 +682,12 @@ const Page = () => {
                     </option>
                     <option value="4000">₦4,000</option>
                     <option value="3000">₦3,000</option>
-                    <option value="5000">₦5,000</option>
-                    <option value="3500">₦3,500</option>
-                  </select>
-                </div>
-                {errors.amount && (
-                  <p className="text-sm text-red-500 mt-1.5">
+                      <option value="5500">₦5,500</option>
+                      <option value="3500">₦3,500</option>
+                    </select>
+                  </div>
+                  {errors.amount && (
+                    <p className="text-sm text-red-500 mt-1.5">
                     {errors.amount.message}
                   </p>
                 )}
